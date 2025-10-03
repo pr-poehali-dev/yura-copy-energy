@@ -268,9 +268,13 @@ export default function Index() {
             <Button 
               size="lg"
               className="bg-white text-blue-600 hover:bg-blue-50 font-bold"
+              onClick={() => {
+                playSound('send');
+                window.location.href = '/dashboard';
+              }}
             >
-              <Icon name="Rocket" size={20} className="mr-2" />
-              Начать проект
+              <Icon name="User" size={20} className="mr-2" />
+              Личный кабинет
             </Button>
           </div>
         </Card>
