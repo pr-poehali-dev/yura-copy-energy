@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { playSound } from '@/utils/sounds';
 
 export default function Index() {
   const [energy, setEnergy] = useState(999999);
@@ -24,6 +25,7 @@ export default function Index() {
         linesOfCode: prev.linesOfCode + Math.floor(Math.random() * 50),
         bugsFixed: prev.bugsFixed + Math.floor(Math.random() * 3)
       }));
+      playSound('energy');
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -38,6 +40,7 @@ export default function Index() {
     const y = e.clientY - rect.top;
     const id = Date.now();
     setParticles(prev => [...prev, { id, x, y }]);
+    playSound('click');
     setTimeout(() => {
       setParticles(prev => prev.filter(p => p.id !== id));
     }, 1000);
@@ -85,6 +88,7 @@ export default function Index() {
   const handleSend = () => {
     if (!input.trim()) return;
     
+    playSound('send');
     setMessages([...messages, { role: 'user', text: input }]);
     setInput('');
     setIsTyping(true);
@@ -97,6 +101,7 @@ export default function Index() {
         'Готово! Ещё что-нибудь? 🚀',
         'Обрабатываю запрос... Производительность 999%!'
       ];
+      playSound('receive');
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         text: responses[Math.floor(Math.random() * responses.length)]
@@ -232,6 +237,7 @@ export default function Index() {
                   className="p-4 bg-white/80 backdrop-blur border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 cursor-pointer animate-fade-in group"
                   style={{ animationDelay: `${idx * 100}ms` }}
                   onClick={() => {
+                    playSound('click');
                     setMessages(prev => [...prev, { role: 'assistant', text: `✨ ${cap.title}: Готов помочь! Просто опиши задачу.` }]);
                     setEnergy(prev => prev + 100);
                   }}
